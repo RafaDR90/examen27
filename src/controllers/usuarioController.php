@@ -7,6 +7,7 @@ use service\usuarioService;
 use utils\utils;
 use utils\ValidationUtils;
 use controllers\CorreoController;
+use function Termwind\render;
 
 class usuarioController{
     private usuarioService $usuarioService;
@@ -26,8 +27,8 @@ class usuarioController{
      */
     public function login():void{
         if (isset($_SESSION['identity'])){
-           $this->pages->render('usuario/login', ['error' => 'Ya has iniciado sesion']);
-           exit();
+            header("Location: " . BASE_URL.'correo');
+            exit();
         }
         if ($_SERVER['REQUEST_METHOD']=='POST'){
             if ($_POST['data']){
@@ -37,11 +38,9 @@ class usuarioController{
                 $existeUsuario=$this->usuarioService->compruebaNombreUsuario($login['nombre_usuario']);
 
                 if (is_string($existeUsuario)){
-                    $this->usuarioService->cierraConexion();
                     $this->pages->render('producto/muestraInicio', ['error' => 'Parece que ha habido algun problema con el usuario, por favor contacte con el soporte tecnico']);
                     exit();
                 }elseif (!$existeUsuario){
-                    $this->usuarioService->cierraConexion();
                     $this->pages->render('usuario/login', ['error' => 'El usuario no existe']);
                     exit();
                 }
@@ -56,9 +55,10 @@ class usuarioController{
                 $userModel=new usuario();
                 if($userModel->comprobarPassword($login['password'],$usuarioFromUserName['password'])){
                     $_SESSION['identity']=$usuarioFromUserName;
-                    $nombre=ucfirst(strtolower($_SESSION['identity']['nombre']));
+                    $nombre=$usuarioFromUserName['nombre'];
 
-                    header("Location: " . BASE_URL.'correo');
+                    $this->pages->render('correo/vista_correo', ['exito' => 'Bienvenido '.$nombre]);
+                    exit();
                 }else{
                     $this->pages->render('usuario/login', ['error' => 'Usuario o contraseña incorrectos']);
                     exit();

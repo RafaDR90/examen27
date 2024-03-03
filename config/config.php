@@ -1,2 +1,2 @@
 <?php
-define('BASE_URL','http://localhost/ExamenSorpresa27/');
+define('BASE_URL','http://localhost/examen27/');

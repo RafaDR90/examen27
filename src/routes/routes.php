@@ -5,7 +5,7 @@ use controllers\CorreoController;
 use controllers\ErrorController;
 use lib\Router;
 class routes{
-    const PATH="/ExamenSorpresa27";
+    const PATH="/examen27";
 
     public static function getRoutes(){
     $router=new Router();
@@ -38,6 +38,16 @@ class routes{
 
         $router->get(self::PATH.'/correo', function () use ($correoController){
                 $correoController->muestraVistaCorreos();
+            });
+
+        $router->post(self::PATH.'/borrarCorreos', function () use ($correoController){
+                $correoController->borrarCorreos();
+            });
+        $router->get(self::PATH.'/nuevoCorreo', function () use ($correoController){
+                $correoController->nuevoCorreo();
+            });
+        $router->post(self::PATH.'/nuevoCorreo', function () use ($correoController){
+                $correoController->enviaCorreo();
             });
 
 

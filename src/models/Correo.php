@@ -1,6 +1,8 @@
 <?php
 namespace models;
 
+use utils\ValidationUtils;
+
 class Correo
 {
     private int|null $id;
@@ -26,13 +28,35 @@ class Correo
         foreach ($datos as $dato){
             $correos[]=new Correo(
                 $dato['id']??null,
-                $dato['de']??"",
+                $dato['de']??$_SESSION['identity']['id'],
                 $dato['asunto']??"",
                 $dato['cuerpo']??"",
-                $dato['fecha']??"",
-                $dato['para'])??"";
+                $dato['fecha']??date('Y-m-d'),
+                $dato['destinatario']);
         }
         return $correos;
+    }
+
+    public function validaCorreo()
+    {
+        $this->setAsunto(ValidationUtils::sanidarStringFiltro($this->getAsunto()));
+        $this->setCuerpo(ValidationUtils::sanidarStringFiltro($this->getCuerpo()));
+        if (!ValidationUtils::SVNumero($this->getPara())){
+            return "El destinatario no es válido";
+        }
+        if (!ValidationUtils::noEstaVacio($this->getAsunto())){
+            return "El asunto no es válido";
+        }
+        if (!ValidationUtils::noEstaVacio($this->getCuerpo())){
+            return "El cuerpo no es válido";
+        }
+        if (!ValidationUtils::TextoNoEsMayorQue($this->getAsunto(),50)){
+            return "El asunto no puede tener mas de 50 caracteres";
+        }
+        if (!ValidationUtils::TextoNoEsMayorQue($this->getCuerpo(),500)){
+            return "El cuerpo no puede tener mas de 500 caracteres";
+        }
+    return null;
     }
 
     public function getId(): ?int

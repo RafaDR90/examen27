@@ -17,6 +17,15 @@ class CorreosService
         return $this->correosRepository->getAllCorreosUsuario($idUsuario);
     }
 
+    public function borrarCorreos($correos)
+    {
+        return $this->correosRepository->borrarCorreos($correos);
+    }
+
+    public function enviaCorreo($correo)
+    {
+        return $this->correosRepository->enviaCorreo($correo);
+    }
 
 
 

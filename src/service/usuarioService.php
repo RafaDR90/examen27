@@ -33,4 +33,8 @@ class usuarioService{
         return $this->usuarioRepository->getUsuarioFromUserName($username);
     }
 
+    public function getAllUsuarios()
+    {
+        return $this->usuarioRepository->getAllUsuarios();
+    }
 }

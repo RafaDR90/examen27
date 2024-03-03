@@ -3,22 +3,19 @@ CREATE DATABASE IF NOT EXISTS ExamenSorpresa;
 USE ExamenSorpresa;
 SET NAMES UTF8;
 
-select * from usuarios;
-select * from mensajes;
-
 
 DROP TABLE IF EXISTS usuarios;
 CREATE TABLE IF NOT EXISTS usuarios(
                                        id              int(255) auto_increment not null,
-    nombre          varchar(100) not null,
-    apellidos       varchar(255),
-    email           varchar(255) not null,
-    password        varchar(255) not null,
-    rol             varchar(20),
-    dni varchar(20),
-    CONSTRAINT pk_usuarios PRIMARY KEY(id),
-    CONSTRAINT uq_email UNIQUE(email)
-    )ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+                                       nombre          varchar(100) not null,
+                                       apellidos       varchar(255),
+                                       email           varchar(255) not null,
+                                       password        varchar(255) not null,
+                                       rol             varchar(20),
+                                       dni varchar(20),
+                                       CONSTRAINT pk_usuarios PRIMARY KEY(id),
+                                       CONSTRAINT uq_email UNIQUE(email)
+)ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 
 drop table if exists mensajes;

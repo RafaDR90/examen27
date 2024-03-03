@@ -122,6 +122,25 @@ class usuarioRepository{
         }
     }
 
+    public function getAllUsuarios()
+    {
+        try{
+            $sel=$this->db->prepara("SELECT * FROM usuarios order by nombre asc");
+            $sel->execute();
+            if ($sel->rowCount()>0) {
+                $usuarios=$sel->fetchAll(PDO::FETCH_ASSOC);
+            }else{
+                $usuarios= null;
+            }
+        }catch (PDOException $err){
+            $usuarios= null;
+        } finally {
+            $sel->closeCursor();
+            $this->db->cierraConexion();
+            return $usuarios;
+        }
+    }
+
 
 
 

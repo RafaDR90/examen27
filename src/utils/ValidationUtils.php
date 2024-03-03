@@ -11,7 +11,7 @@ class ValidationUtils
      * @param $input string a sanear y validar
      * @return int|null devuelve el numero en integer o null si no es un numero
      */
-    public static function SVNumero(string $input): ?int
+    public static function SVNumero($input): ?int
     {
         $cleanedInput = htmlspecialchars(trim($input), ENT_QUOTES, 'utf-8');
         if (ctype_digit($cleanedInput)) {
